@@ -1,0 +1,133 @@
+--- origsrc/kdemultimedia-3.5.10/akode_artsplugin/Makefile.am	2006-07-22 03:10:53.000000000 -0500
++++ src/kdemultimedia-3.5.10/akode_artsplugin/Makefile.am	2009-01-08 19:54:55.720250000 -0600
+@@ -8,7 +8,7 @@ libarts_akode_la_SOURCES = akodearts.cc 
+         akodeMPCPlayObject_impl.cpp akodeMPEGPlayObject_impl.cpp \
+         akodeFFMPEGPlayObject_impl.cpp akodeXiphPlayObject_impl.cpp \
+         akodeVorbisStreamPlayObject_impl.cpp akodeSpeexStreamPlayObject_impl.cpp
+-libarts_akode_la_LDFLAGS = $(all_libraries) -module -no-undefined
++libarts_akode_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+ libarts_akode_la_LIBADD =  $(akode_libs) -lkmedia2_idl -lsoundserver_idl -lartsflow
+ libarts_akode_la_METASOURCES = AUTO
+ libarts_akode_la_COMPILE_FIRST = akodearts.h
+--- origsrc/kdemultimedia-3.5.10/arts/tools/Makefile.am	2005-09-10 03:19:45.000000000 -0500
++++ src/kdemultimedia-3.5.10/arts/tools/Makefile.am	2009-01-08 19:54:55.892125000 -0600
+@@ -32,7 +32,7 @@ SOMAJOR = 1
+ SOMINOR = 0
+ SOSUBMINOR = 0
+ 
+-libartscontrolapplet_la_LDFLAGS = $(all_libraries) -version-info $(SOMAJOR):$(SOMINOR):$(SOSUBMINOR) -no-undefined -module
++libartscontrolapplet_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+ libartscontrolsupport_la_LDFLAGS = $(all_libraries) -version-info $(SOMAJOR):$(SOMINOR):$(SOSUBMINOR) -no-undefined
+ 
+ libartscontrolapplet_la_LIBADD = \
+--- origsrc/kdemultimedia-3.5.10/audiofile_artsplugin/Makefile.am	2006-07-22 03:10:54.000000000 -0500
++++ src/kdemultimedia-3.5.10/audiofile_artsplugin/Makefile.am	2009-01-08 19:54:55.985875000 -0600
+@@ -5,7 +5,7 @@ noinst_HEADERS = audiofilePlayObjectI.h
+ lib_LTLIBRARIES = libarts_audiofile.la
+ libarts_audiofile_la_COMPILE_FIRST = audiofilearts.h
+ libarts_audiofile_la_SOURCES = audiofilearts.cc audiofilePlayObjectI.cpp
+-libarts_audiofile_la_LDFLAGS = $(all_libraries) -module -no-undefined
++libarts_audiofile_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+ libarts_audiofile_la_LIBADD =  -lkmedia2_idl -lsoundserver_idl -lartsflow -laudiofile
+ libarts_audiofile_la_METASOURCES = AUTO
+ 
+--- origsrc/kdemultimedia-3.5.10/kfile-plugins/mpeg/kfile_mpeg.cpp	2007-01-15 05:22:58.000000000 -0600
++++ src/kdemultimedia-3.5.10/kfile-plugins/mpeg/kfile_mpeg.cpp	2009-01-08 19:54:56.032750000 -0600
+@@ -40,7 +40,9 @@
+ 
+ typedef unsigned char uint8_t;
+ typedef unsigned short uint16_t;
++#ifndef __CYGWIN__
+ typedef unsigned int uint32_t;
++#endif
+ 
+ typedef KGenericFactory<KMpegPlugin> MpegFactory;
+ 
+--- origsrc/kdemultimedia-3.5.10/kfile-plugins/sid/Makefile.am	2005-09-10 03:20:07.000000000 -0500
++++ src/kdemultimedia-3.5.10/kfile-plugins/sid/Makefile.am	2009-01-08 19:54:56.110875000 -0600
+@@ -10,7 +10,7 @@ kde_module_LTLIBRARIES = kfile_sid.la
+ 
+ kfile_sid_la_SOURCES = kfile_sid.cpp
+ kfile_sid_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+-kfile_sid_la_LIBADD = $(LIB_KIO)
++kfile_sid_la_LIBADD = $(LIB_KIO) $(taglib_libs)
+ 
+ # let automoc handle all of the meta source files (moc)
+ METASOURCES = AUTO
+--- origsrc/kdemultimedia-3.5.10/kmid/Makefile.am	2005-09-10 03:20:00.000000000 -0500
++++ src/kdemultimedia-3.5.10/kmid/Makefile.am	2009-01-08 19:54:56.173375000 -0600
+@@ -3,7 +3,7 @@ INCLUDES = $(all_includes)
+ kde_module_LTLIBRARIES = libkmidpart.la
+ lib_LTLIBRARIES = libkmidlib.la
+ 
+-libkmidlib_la_LDFLAGS = $(all_libraries)
++libkmidlib_la_LDFLAGS = $(all_libraries) -no-undefined
+ libkmidlib_la_LIBADD = $(LIB_KFILE) $(LIB_KPARTS) $(LIB_KIO) -lkmid
+ 
+ libkmidpart_la_LDFLAGS = $(all_libraries) $(KDE_PLUGIN) -module
+--- origsrc/kdemultimedia-3.5.10/kmix/Makefile.am	2005-09-10 03:20:07.000000000 -0500
++++ src/kdemultimedia-3.5.10/kmix/Makefile.am	2009-01-08 19:54:56.220250000 -0600
+@@ -32,7 +32,7 @@ kmixctrl_la_SOURCES = kmixctrl.cpp mixer
+ 	mixertoolbox.cpp mixer_backend.cpp
+ 
+ kmixctrl_la_LIBADD = $(LIB_KDECORE) $(LIBALIB) $(LIBOSSAUDIO) $(LIBASOUND)
+-kmixctrl_la_LDFLAGS = $(all_libraries) -module -avoid-version
++kmixctrl_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+ 
+ kmix_panelapplet_la_SOURCES = kmixapplet.cpp \
+ 	viewbase.cpp viewapplet.cpp \
+--- origsrc/kdemultimedia-3.5.10/libkcddb/Makefile.am	2005-09-10 03:19:31.000000000 -0500
++++ src/kdemultimedia-3.5.10/libkcddb/Makefile.am	2009-01-08 19:54:56.470250000 -0600
+@@ -13,7 +13,7 @@ libkcddb_la_SOURCES = \
+     synchttpsubmit.cpp cdinfodialogbase.ui categories.cpp genres.cpp \
+     cdinfoencodingwidget.cpp cdinfoencodingwidgetbase.ui
+ 
+-libkcddb_la_LDFLAGS = $(all_libraries) -version-info 1:0:0
++libkcddb_la_LDFLAGS = $(all_libraries) -version-info 1:0:0 -no-undefined
+ libkcddb_la_LIBADD  = $(LIB_KDECORE) $(LIB_KIO)
+ 
+ METASOURCES = AUTO
+--- origsrc/kdemultimedia-3.5.10/noatun/app/Makefile.am	2005-09-10 03:19:31.000000000 -0500
++++ src/kdemultimedia-3.5.10/noatun/app/Makefile.am	2009-01-08 19:54:56.548375000 -0600
+@@ -2,7 +2,7 @@ INCLUDES = -I$(top_srcdir)/noatun/librar
+ 
+ kdeinit_LTLIBRARIES = noatun.la
+ noatun_la_SOURCES = main.cpp
+-noatun_la_LDFLAGS = $(KDE_RPATH) $(all_libraries) -module -avoid-version
++noatun_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+ noatun_la_LIBADD = -lqtmcop -lkmedia2_idl -lsoundserver_idl $(top_builddir)/noatun/library/libnoatun.la
+ 
+ bin_PROGRAMS =
+--- origsrc/kdemultimedia-3.5.10/noatun/library/Makefile.am	2005-09-10 03:19:34.000000000 -0500
++++ src/kdemultimedia-3.5.10/noatun/library/Makefile.am	2009-01-08 19:54:56.595250000 -0600
+@@ -26,7 +26,7 @@ include_HEADERS  = \
+ 	ksaver.h
+ 
+ libnoatun_la_LDFLAGS     = \
+-		-version-info 3:0:2 $(KDE_RPATH) $(all_libraries)
++		-version-info 3:0:2 $(KDE_RPATH) $(all_libraries) -no-undefined
+ libnoatun_la_LIBADD      = $(top_builddir)/arts/gui/common/libartsgui.la \
+ 	$(top_builddir)/arts/gui/kde/libartsgui_kde.la $(top_builddir)/arts/modules/libartsmodules.la \
+ 	-lkio -lqtmcop -lkmedia2_idl $(top_builddir)/noatun/library/noatunarts/libnoatunarts.la \
+--- origsrc/kdemultimedia-3.5.10/noatun/library/noatuntags/Makefile.am	2005-09-10 03:19:33.000000000 -0500
++++ src/kdemultimedia-3.5.10/noatun/library/noatuntags/Makefile.am	2009-01-08 19:54:56.642125000 -0600
+@@ -3,7 +3,7 @@ INCLUDES = -I$(top_srcdir)/noatun/librar
+ lib_LTLIBRARIES = libnoatuntags.la
+ 
+ libnoatuntags_la_SOURCES = tags.cpp
+-libnoatuntags_la_LDFLAGS = -version-info 3:0:2 $(all_libraries)
++libnoatuntags_la_LDFLAGS = -version-info 3:0:2 $(all_libraries) -no-undefined
+ libnoatuntags_la_LIBADD = ../libnoatun.la
+ 
+ libnoatuntags_la_METASOURCES = AUTO
+--- origsrc/kdemultimedia-3.5.10/xine_artsplugin/Makefile.am	2006-07-22 03:10:54.000000000 -0500
++++ src/kdemultimedia-3.5.10/xine_artsplugin/Makefile.am	2009-01-08 19:54:56.751500000 -0600
+@@ -7,7 +7,7 @@ lib_LTLIBRARIES = libarts_xine.la
+ libarts_xine_la_SOURCES = xinePlayObject.cc \
+ 			  xinePlayObject_impl.cpp \
+ 			  audio_fifo_out.c
+-libarts_xine_la_LDFLAGS = $(all_libraries) -module -no-undefined -pthread
++libarts_xine_la_LDFLAGS = $(all_libraries) -module $(KDE_PLUGIN)
+ libarts_xine_la_LIBADD = $(XINE_LIBS) $(LIB_X11) $(LIB_XEXT) \
+ 			 -lkmedia2_idl -lsoundserver_idl -lartsflow
+ 

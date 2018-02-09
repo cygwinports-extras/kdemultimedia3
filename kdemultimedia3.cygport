@@ -1,0 +1,264 @@
+inherit kde3
+
+NAME="kdemultimedia3"
+VERSION=3.5.10
+RELEASE=1
+CATEGORY="Audio Video KDE"
+SUMMARY="KDE 3 multimedia suite"
+DESCRIPTION="KDE multimedia suite:
+* arts: a versatily multimedia system the consists of various little
+        building blocks that you (or an application) can combine in
+        almost arbitrary ways to create sound and video processing pipes
+* kaboodle: light media player
+* krec: A recording frontend using aRts
+* noatun: a multimedia player for sound and movies, very extensible due to
+          its plugin interface"
+
+PATCH_URI+="
+	3.5.10-subdir-conditionals.patch
+	3.5.10-no-undefined.patch
+	3.5.10-parallel-make.patch
+"
+
+DO_NOT_COMPILE="akode_artsplugin audiofile_artsplugin juk kappfinder-data
+	kaudiocreator kfile-plugins kmid kmix kscd libkcddb mpeglib
+	mpeglib_artsplug mpg123_artsplugin oggvorbis_artsplugin xine_artsplugin"
+
+PKG_NAMES="${PN} artsbuilder artscontrol artsmidi
+	libartsbuilder0 libartsbuilder-devel libartscontrolsupport1
+	libartsgui0 libartsgui-devel libartsmidi0 libartsmidi-devel
+	libartsmodules0 libartsmodules-devel
+	kaboodle krec noatun"
+kdemultimedia3_REQUIRES="artsbuilder artscontrol kaboodle krec noatun"
+artsbuilder_SUMMARY="aRts Audio Filter Designer"
+artsbuilder_CONTENTS="
+	etc/postinstall/${NAME}.sh
+	usr/bin/artsbuilder.exe
+	usr/share/applications/kde/artsbuilder.desktop
+	usr/share/apps/artsbuilder/
+	usr/share/doc/HTML/en/artsbuilder/
+	usr/share/icons/crystalsvg/*/actions/artsbuilderexecute.*
+	usr/share/icons/hicolor/*/apps/artsbuilder.*
+	usr/share/mimelnk/application/x-artsbuilder.desktop
+"
+libartsbuilder0_SUMMARY="${artsbuilder_SUMMARY} library"
+libartsbuilder0_CONTENTS="
+	usr/bin/cygartsbuilder-0.dll
+	usr/lib/libartsbuilder.la
+	usr/lib/mcop/Arts/ArtsBuilderLoader.mcopclass
+	usr/lib/mcop/Arts/LocalFactory.mcopclass
+	usr/lib/mcop/Arts/StructureBuilder.mcopclass
+	usr/lib/mcop/Arts/StructureDesc.mcopclass
+	usr/lib/mcop/artsbuilder.*
+"
+libartsbuilder_devel_SUMMARY=${libartsbuilder0_SUMMARY}
+libartsbuilder_devel_CONTENTS="
+	usr/include/kde3/arts/artsbuilder.*
+	usr/lib/kde3/devel/libartsbuilder.dll.a
+"
+artscontrol_SUMMARY="aRts Sound Server Control"
+artscontrol_CONTENTS="
+	etc/postinstall/${NAME}.sh
+	usr/bin/artscontrol.exe
+	usr/share/applications/kde/artscontrol.desktop
+	usr/share/icons/hicolor/*/apps/artscontrol.*
+"
+libartscontrolsupport1_SUMMARY="${artscontrol_SUMMARY} library"
+libartscontrolsupport1_CONTENTS="
+	etc/postinstall/${NAME}.sh
+	usr/bin/cygartscontrolsupport-1.dll
+	usr/share/apps/artscontrol/
+	usr/share/icons/crystalsvg/*/actions/artsaudiomanager.*
+	usr/share/icons/crystalsvg/*/actions/artsenvironment.*
+	usr/share/icons/crystalsvg/*/actions/artsfftscope.*
+	usr/share/icons/crystalsvg/*/actions/artsmediatypes.*
+	usr/share/icons/crystalsvg/*/actions/artsmidimanager.*
+"
+libartsgui0_SUMMARY="aRts GUI class library"
+libartsgui0_CONTENTS="
+	usr/bin/cygartsgui-0.dll
+	usr/bin/cygartsgui_idl-0.dll
+	usr/bin/cygartsgui_kde-0.dll
+	usr/lib/libartsgui.la
+	usr/lib/libartsgui_kde.la
+	usr/lib/mcop/Arts/Button.mcopclass
+	usr/lib/mcop/Arts/Fader.mcopclass
+	usr/lib/mcop/Arts/GenericGuiFactory.mcopclass
+	usr/lib/mcop/Arts/GraphLine.mcopclass
+	usr/lib/mcop/Arts/HBox.mcopclass
+	usr/lib/mcop/Arts/Label.mcopclass
+	usr/lib/mcop/Arts/LayoutBox.mcopclass
+	usr/lib/mcop/Arts/LevelMeter.mcopclass
+	usr/lib/mcop/Arts/LineEdit.mcopclass
+	usr/lib/mcop/Arts/PopupBox.mcopclass
+	usr/lib/mcop/Arts/Poti.mcopclass
+	usr/lib/mcop/Arts/SpinBox.mcopclass
+	usr/lib/mcop/Arts/VBox.mcopclass
+	usr/lib/mcop/Arts/Widget.mcopclass
+	usr/lib/mcop/artsgui.mcop*
+"
+libartsgui_devel_SUMMARY=${libartsgui0_SUMMARY}
+libartsgui_devel_CONTENTS="
+	usr/include/kde3/arts/artsgui.h
+	usr/include/kde3/arts/artsgui.idl
+	usr/include/kde3/arts/kartswidget.h
+	usr/include/kde3/arts/kframe_impl.h
+	usr/include/kde3/arts/klayoutbox_impl.h
+	usr/include/kde3/arts/kwidgetrepo.h
+	usr/include/kde3/arts/kwidget_impl.h
+	usr/lib/kde3/devel/libartsgui.dll.a
+	usr/lib/kde3/devel/libartsgui_idl.dll.a
+	usr/lib/kde3/devel/libartsgui_kde.dll.a
+	usr/lib/libartsgui_idl.la
+"
+artsmidi_CONTENTS="
+	usr/bin/midisend.exe
+"
+libartsmidi0_CONTENTS="
+	usr/bin/cygartsmidi_idl-0.dll
+	usr/lib/cygartsmidi.dll
+	usr/lib/libartsmidi.la
+	usr/lib/mcop/Arts/MidiManager.mcopclass
+	usr/lib/mcop/artsmidi.*
+"
+libartsmidi_devel_CONTENTS="
+	usr/include/kde3/arts/artsmidi.*
+	usr/lib/kde3/devel/libartsmidi_idl.dll.a
+	usr/lib/libartsmidi_idl.la
+"
+libartsmodules0_CONTENTS="
+	usr/bin/cygartsmodules*-0.dll
+	usr/lib/libartsmodules*.la
+	usr/lib/mcop/Arts/Effect*
+	usr/lib/mcop/Arts/Environment/
+	usr/lib/mcop/Arts/FiveBand*
+	usr/lib/mcop/Arts/Freeverb*
+	usr/lib/mcop/Arts/LittleStereo*
+	usr/lib/mcop/Arts/Mixer*
+	usr/lib/mcop/Arts/Mono*
+	usr/lib/mcop/Arts/Simple*
+	usr/lib/mcop/Arts/Stereo*
+	usr/lib/mcop/Arts/Synth_*
+	usr/lib/mcop/Arts/Voice*
+	usr/lib/mcop/artsmodules*
+"
+libartsmodules_devel_CONTENTS="
+	usr/include/kde3/arts/artsmodules*
+	usr/lib/kde3/devel/libartsmodules*.dll.a
+"
+kaboodle_SUMMARY="KDE 3 aRts media player"
+kaboodle_CONTENTS="
+	etc/postinstall/${NAME}.sh
+	usr/bin/kaboodle.exe
+	usr/lib/kde3/*kaboodlepart.*
+	usr/share/applications/kde/kaboodle.desktop
+	usr/share/apps/kaboodle/
+	usr/share/doc/HTML/en/kaboodle/
+	usr/share/doc/kaboodle/
+	usr/share/icons/hicolor/*/apps/kaboodle.png
+	usr/share/services/kaboodleengine.desktop
+	usr/share/services/kaboodle_component.desktop
+"
+krec_SUMMARY="KDE 3 aRts recording frontend"
+krec_CONTENTS="
+	etc/postinstall/${NAME}.sh
+	usr/bin/cygkdeinit_krec.dll
+	usr/bin/krec.exe
+	usr/lib/kde3/kcm_krec*
+	usr/lib/kde3/krec.*
+	usr/lib/kde3/*krecexport*.*
+	usr/lib/libkdeinit_krec.la
+	usr/share/applications/kde/krec.desktop
+	usr/share/apps/krec/
+	usr/share/doc/HTML/en/krec/
+	usr/share/icons/hicolor/*/apps/krec.png
+	usr/share/services/kcm_krec*.desktop
+	usr/share/services/krec_export*.desktop
+	usr/share/servicetypes/krec_exportitem.desktop
+"
+noatun_SUMMARY="KDE 3 media player"
+noatun_CONTENTS="
+etc/postinstall/${NAME}.sh
+usr/bin/cyg*noatun*.dll
+usr/bin/cygwinskinvis.dll
+usr/bin/noatun.exe
+usr/include/kde3/cmodule.h
+usr/include/kde3/effectview.h
+usr/include/kde3/equalizerview.h
+usr/include/kde3/ksaver.h
+usr/include/kde3/mimetypetree.h
+usr/include/kde3/noatun/
+usr/include/kde3/plugin_deps.h
+usr/lib/kde3/devel/libnoatun*
+usr/lib/kde3/devel/libwinskinvis.*
+usr/lib/kde3/noatun*.*
+usr/lib/cygartseffects.dll
+usr/lib/libartseffects.la
+usr/lib/lib*noatun*.*
+usr/lib/libwinskinvis.la
+usr/lib/mcop/artseffects.mcopclass
+usr/lib/mcop/artseffects.mcoptype
+usr/lib/mcop/ExtraStereo.mcopclass
+usr/lib/mcop/ExtraStereoGuiFactory.mcopclass
+usr/lib/mcop/Noatun/
+usr/lib/mcop/noatunarts.mcopclass
+usr/lib/mcop/noatunarts.mcoptype
+usr/lib/mcop/RawWriter.mcopclass
+usr/lib/mcop/VoiceRemoval.mcopclass
+usr/lib/mcop/winskinvis.mcopclass
+usr/lib/mcop/winskinvis.mcoptype
+usr/share/applications/kde/noatun.desktop
+usr/share/apps/kconf_update/noatun.upd
+usr/share/apps/kconf_update/noatun20update.exe
+usr/share/apps/noatun/
+usr/share/doc/HTML/en/noatun/
+usr/share/doc/noatun/
+usr/share/icons/hicolor/*/apps/noatun.png
+usr/share/mimelnk/interface/x-winamp-skin.desktop
+"
+
+PKG_IGNORE="
+	usr/lib/kde3/devel/libartscontrolsupport.dll.a
+	usr/lib/libartscontrolsupport.la
+	usr/share/doc/HTML/en/kioslave/
+	usr/share/doc/${NAME}
+"
+
+# akode, gstreamer: only used by juk
+# cdparanoia: only used by kaudiocreator, libkcddb
+# musicbrainz: tunepimp-0.4
+# ossaudio: no /dev/mixer
+CYGCONF_ARGS="
+	--with-audiofile
+	--with-lame
+	--with-taglib
+	--with-theora
+	--with-vorbis
+	--without-akode
+	--without-gstreamer
+	--without-cdparanoia
+	--without-musicbrainz
+	--without-ossaudio
+	--without-xine
+"
+
+src_install() {
+	cd ${B}
+	kde3_install
+
+	# KDE 3 desktop components
+	rm -f ${D}/usr/lib/*artscontrolapplet*
+	rm -f ${D}/usr/share/apps/kicker/applets/*
+
+	# these do double duty as linked and dynamically loaded
+	sed -i -e '/dependency_libs=/d' \
+		${D}/usr/lib/libartsbuilder.la \
+		${D}/usr/lib/libartsgui.la \
+		${D}/usr/lib/libartsgui_kde.la \
+		${D}/usr/lib/libartsmodules*.la
+
+	for f in ${D}/usr/share/applications/kde/*
+	do
+		desktop-file-edit --remove-key OnlyShowIn $f
+	done
+}

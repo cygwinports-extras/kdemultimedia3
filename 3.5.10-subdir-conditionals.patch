@@ -1,0 +1,19 @@
+--- origsrc/kdemultimedia-3.5.10/kscd/configure.in.in	2005-09-10 03:19:57.000000000 -0500
++++ src/kdemultimedia-3.5.10/kscd/configure.in.in	2009-01-08 19:54:56.392125000 -0600
+@@ -55,7 +55,7 @@ case "$host" in
+   *-*-*freebsd*) kscd_compile=yes;;
+   *-*-*netbsd*) kscd_compile=yes;;
+   *-*-*openbsd*) kscd_compile=yes;;
+-  *) kscd_compile=yes;;
++  *) kscd_compile=no;;
+ esac
+ AC_MSG_RESULT($kscd_compile)
+ if test "$kscd_compile" = "no"; then
+--- origsrc/kdemultimedia-3.5.10/oggvorbis_artsplugin/configure.in.in	2005-09-10 03:19:44.000000000 -0500
++++ src/kdemultimedia-3.5.10/oggvorbis_artsplugin/configure.in.in	2009-01-08 19:54:56.689000000 -0600
+@@ -1,4 +1,4 @@
+-if test "$kde_mpeglib_compiles" = "yes"
++if test "x$build_arts" = "xno"
+ then
+ DO_NOT_COMPILE="$DO_NOT_COMPILE oggvorbis_artsplugin"
+ fi
